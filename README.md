@@ -1,90 +1,117 @@
-﻿# Sentiment Analysis
-
-## Backstory
-
+# Sentiment & Topic Analysis on Twitter Conversations
 
 ## Overview
+This repository implements a **Python NLP pipeline** for analyzing customer sentiment in Twitter conversations. It replicates, in a fully open‑source form, work originally done in a corporate setting — but without any pay‑to‑use LLMs. The stack is built on **spaCy** and **BERT**, with **BERTopic** for topic discovery.
 
-This repository contains a Python-based pipeline for analyzing Twitter conversations. The project combines text preprocessing, topic modeling, and sentiment analysis to extract meaningful insights from conversational data.
+The pipeline processes raw tweets, groups them into conversations, and outputs:
 
-The workflow is organized into two main stages:
+- Cleaned text stored in SQLite
+- Topics discovered via BERTopic
+- Sentiment classification (negative, neutral, positive)
+- Confidence metrics and priority flags
 
-- Preprocessing: cleans and normalizes raw text by removing URLs, mentions, hashtags, emojis, and other noise before storing the processed output in SQLite.
-- Analysis: aggregates conversations, applies BERTopic for topic discovery, and uses a transformer-based sentiment model to classify each conversation as negative, neutral, or positive.
+## Workflow
 
-The outputs include structured results in SQLite and a summary report with confidence metrics.
+### **Preprocessing**
+
+- Removes URLs, mentions, hashtags, emojis, and noise
+- Normalizes text and stores results in SQLite
+
+### **Analysis**
+
+- Aggregates tweets into conversations
+- Generates embeddings with SentenceTransformers
+- Applies BERTopic for topic modeling
+- Runs transformer‑based sentiment classification
+- Assigns priority labels based on confidence thresholds
 
 ## Packages Used
 
-The main Python libraries used in this project are:
+- **pandas**, **numpy**
+- **spaCy** (with `en_core_web_sm`)
+- **sentence-transformers**
+- **BERTopic**
+- **torch**, **transformers**
+- **scikit-learn**
+- **sqlite3** (standard library)
 
-- pandas
-- numpy
-- spaCy
-- sentence-transformers
-- BERTopic
-- torch
-- transformers
-- scikit-learn
-- sqlite3 (standard library)
-
-## How to Install
+## Installation
 
 ### 1. Create and activate a virtual environment
+Windows:
 
-On Windows:
+bash
 
-```bash
+```
 python -m venv venv
-venv\\Scripts\\activate
+venv\Scripts\activate
 ```
 
-On macOS/Linux:
+macOS/Linux:
 
-```bash
+bash
+
+```
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 2. Install Python dependencies
+### 2. Install dependencies
+bash
 
-Install the required packages from the requirements file:
-
-```bash
+```
 pip install -r requirements.txt
 ```
 
-### 3. Install the spaCy language model
+### 3. Install spaCy model
+bash
 
-This project uses the English spaCy model for preprocessing. Install it with:
-
-```bash
+```
 python -m spacy download en_core_web_sm
 ```
 
-> If you are using a GPU-enabled environment, make sure your PyTorch installation is compatible with your CUDA setup.
+> If using GPU, ensure PyTorch matches your CUDA setup.
+
+### 4. Run the runner script
+bash
+
+```
+python runner.py
+```
 
 ## Confidence Metrics
+The pipeline outputs `confidence_metrics.txt` with:
 
-The pipeline generates confidence metrics for both topic modeling and sentiment analysis. These are written to:
+- Total conversations processed
+- Average & median topic confidence
+- Average & median sentiment confidence
+- Topic distribution summary
+- Sentiment distribution summary
+- High vs. normal priority counts
 
-- confidence_metrics.txt
+**Example run (798k conversations):**
 
-The report includes:
+- Avg topic confidence: 0.638
+- Median topic confidence: 0.790
+- Avg sentiment confidence: 0.684
+- Median sentiment confidence: 0.662
+- High priority cases: 305,432
+- Normal priority cases: 492,580
+Sentiment distribution:
 
-- total number of conversations processed
-- average and median topic confidence
-- average and median sentiment confidence
-- topic distribution summary
-- sentiment distribution summary
-- counts of high-priority and normal-priority conversations
+- Negative: 350,195
+- Neutral: 261,425
+- Positive: 186,392
+
+## Performance
+
+- Runtime: ~3.5 hours on RTX 4080 + Ryzen 7 5800X + 16 GB DDR5 RAM
+- Median confidence values remain stable across runs (topics ~78–82%, sentiment ~66–68%)
 
 ## Next Steps
 
-Potential improvements and next steps for this project include:
-
-- further tuning of BERTopic parameters for better topic quality
-- experimenting with alternative embedding models
-- adding a more user-friendly CLI or notebook-based workflow
-- expanding reporting and visualization capabilities
-- integrating the pipeline into a larger NLP or production workflow
+- Tune BERTopic parameters for cleaner topics
+- Experiment with alternative embedding models
+- Add CLI / notebook workflow
+- Expand reporting & visualization
+- Integrate into larger NLP pipelines
