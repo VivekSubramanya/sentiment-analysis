@@ -10,6 +10,8 @@ The pipeline processes raw tweets, groups them into conversations, and outputs:
 - Sentiment classification (negative, neutral, positive)
 - Confidence metrics and priority flags
 
+The dataset is from https://www.kaggle.com/datasets/thoughtvector/customer-support-on-twitter/data, which contains a total of 2.8 million tweets. 
+
 ## Workflow
 
 ### **Preprocessing**
@@ -89,7 +91,7 @@ The pipeline outputs `confidence_metrics.txt` with:
 - Sentiment distribution summary
 - High vs. normal priority counts
 
-**Example run (798k conversations):**
+**Example run (798k conversations from 2.8m tweets):**
 
 - Avg topic confidence: 0.638
 - Median topic confidence: 0.790
