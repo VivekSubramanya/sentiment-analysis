@@ -1,0 +1,28 @@
+Pipeline Confidence Metrics
+===========================
+Total conversations: 798012
+Average topic confidence: 0.638
+Median topic confidence: 0.790
+Average sentiment confidence: 0.684
+Median sentiment confidence: 0.662
+High priority cases: 305432
+Normal priority cases: 492580
+
+Topic distribution (top 10):
+-1: to, the, you, I, a (144995)
+0: flight, AmericanAir, Delta, to, for (105897)
+1: Tesco, store, sainsburys, you, this (68382)
+2: AmazonHelp, order, the, to, delivery (68096)
+3: UberSupport, 115873, driver, a, us (45795)
+4: VirginTrains, GWRHelp, train, SWHelp, to (38095)
+5: XboxSupport, AskPlayStation, ATVIAssist, the, Xbox (34632)
+6: SpotifyCares, Hey, Spotify, 115888, Well (32281)
+7: DM, you, to, us, your (27825)
+9: AppleSupport, httpstcoGDrqU22YpT, iOS, iPhone, 115858 (27676)
+
+Sentiment distribution:
+Negative: 350195
+Neutral: 261425
+Positive: 186392
+
+Run completed successfully.
